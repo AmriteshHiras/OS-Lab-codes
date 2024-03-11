@@ -131,18 +131,20 @@ int *Sorted(process P[], int n)
     return sorted_pid;
 }
 
-void SJF(process P[], int n)
-{
+void SJF(process P[], int n){
     int time = 0;
     int count = 0;
-    int *SL = Sorted(P, n); // Call the Sorted function to get the sorted process list
+    int *SL = Sorted(P, n);
     int cycle = 0;
+    for(int i = 0; i < n; i++){
+        P[i].CT = 0;
+    }
     while (count < n)
     {
         cycle = 0;
         for (int i = 0; i < n; i++)
         {
-            if (P[SL[i] - 1].AT <= time && P[SL[i] - 1].CT == 0)
+            if (P[SL[i] - 1].AT <= time && P[SL[i]- 1].CT == 0)
             {
                 P[SL[i] - 1].CT = time + P[SL[i] - 1].BT;
                 time += P[SL[i] - 1].BT;
@@ -153,8 +155,7 @@ void SJF(process P[], int n)
                 break;
             }
         }
-        if (cycle == 0)
-        {
+        if (cycle == 0){
             time++;
         }
     }
@@ -270,12 +271,12 @@ void Priority(process P[], int n)
 // Main Function:-
 int main(){
     int n;
-    cout << "Enter the number of processes: ";
-    cin >> n;
-    cout << "1. FCFS\n2. SJf\n3. RoundRobin\n4. Priority Scheduling\n";
     int choice;
+    cout << "1. FCFS\n2. SJf\n3. RoundRobin\n4. Priority Scheduling\n";
     cout << "Enter the algorithm:- ";
     cin >> choice;
+    cout << "Enter the number of processes: ";
+    cin >> n;
     process *P = new process[n];
     for (int i = 0; i < n; i++)
     {
